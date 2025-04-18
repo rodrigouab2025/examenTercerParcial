@@ -1,0 +1,217 @@
+<div class="container">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand d-flex align-items-center" href="#">
+        <img src="https://w7.pngwing.com/pngs/748/441/png-transparent-logo-pharmacy-pills-miscellaneous-trademark-pharmaceutical-drug-thumbnail.png" alt="Logo" width="40" height="40" class="d-inline-block align-text-top me-2">
+        Farmacia
+      </a>
+  
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+  
+        <div class="collapse navbar-collapse justify-content-end" id="navbarContent">
+            <ul class="navbar-nav d-flex flex-row flex-wrap gap-2">
+                <li class="nav-item">
+                    <button class="btn btn-outline-info" type="button">
+                    Más usados (mes)
+                    </button>
+                </li>
+                <li class="nav-item">
+                    <button class="btn btn-outline-info" type="button">
+                    Más usados (día)
+                    </button>
+                </li>
+                <li class="nav-item">
+                    <button class="btn btn-outline-info" type="button">
+                    Menos usados (mes)
+                    </button>
+                </li>
+                <li class="nav-item">
+                    <button class="btn btn-outline-info" type="button">
+                    Menos usados (día)
+                    </button>
+                </li>
+                  
+            </ul>
+        </div>
+      
+    </nav>
+    <div class="container mt-4">
+        <div class="row g-4" style="height: 500px;">
+            <div class="col-md-5">
+                <button class="btn btn-info w-100 mb-3" data-bs-toggle="modal" data-bs-target="#modalRegistrarMedicamento">
+                Registrar nuevo medicamento
+                </button>
+                <table class="table table-hover">
+                    <thead class="table-info text-light">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Imagen</th>
+                            <th scope="col">Nombre del medicamento</th>
+                            <th scope="col">Precio</th>
+                            <th scope="col">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                        
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-7">
+                <div class="mb-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Buscar medicamento..."
+                  />
+                </div>
+                <table class="table table-hover">
+                  <thead class="table-info text-light">
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Imagen</th>
+                      <th scope="col">Nombre del medicamento</th>
+                      <th scope="col">Precio</th>
+                      <th scope="col">Seleccionar</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th></th>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td>
+                        <button class="btn btn-sm btn-success">Agregar <i class="fas fa-shopping-cart"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              
+        </div>
+
+      </div>
+      
+      <div class="container mt-4">
+        <div class="row g-4" style="height: 500px;">
+          <div class="col-md-7">
+            <table class="table table-hover">
+                <thead class="table-info text-light">
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Imagen</th>
+                    <th scope="col">Nombre del medicamento</th>
+                    <th scope="col">Precio</th>
+                    <th scope="col">Seleccionar</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th></th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                      <button class="btn btn-sm btn-danger">Quitar <i class="fas fa-trash"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+            </table>
+          </div>
+      
+          <!-- Columna 4 -->
+          <div class="col-md-5">
+            <form>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="form-group">
+                                <input type="text" class="form-control mb-3" placeholder="Número(NIT/CI/OTRO)">
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <input type="text" class="form-control mb-3" placeholder="Complemento">
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <input type="text" class="form-control mb-3" placeholder="Nombre del cliente">
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label class="form-label" for="tipopago">Tipo de pago:</label>
+                                <select class="form-control form-control" name="tipopago" id="tipopago" wire:model="tipopago">
+                                    <option value="EFECTIVO">EFECTIVO</option>
+                                    <option value="PAGO POR QR">PAGO POR QR</option>
+                                    <option value="DEPOSITO BANCARIO">DEPOSITO BANCARIO</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
+                    
+                </div>
+            </form>
+            <button class="btn btn-info w-100 mt-3 mb-3" data-bs-toggle="modal" data-bs-target="#modalRegistrarSalida">
+              Registrar salida
+            </button>
+      
+            <table class="table table-hover">
+                <thead class="table-info text-light">
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Imagen</th>
+                    <th scope="col">Nombre del medicamento</th>
+                    <th scope="col">Precio</th>
+                    <th scope="col">Seleccionar</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th></th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                      <button class="btn btn-sm btn-danger">Quitar <i class="fas fa-trash"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      
+      <div class="modal fade" id="modalRegistrarMedicamento" tabindex="-1" aria-labelledby="modalMedicamentoLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header bg-success">
+              <h5 class="modal-title" id="modalMedicamentoLabel">Registrar nuevo medicamento</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+              <input type="text" class="form-control mb-3" placeholder="Código">
+              <input type="text" class="form-control mb-3" placeholder="Nombre del medicamento">
+              <input type="text" class="form-control mb-3" placeholder="Imagen">
+              <input type="number" class="form-control mb-3" placeholder="Precio">
+              
+            </div>
+            <div class="modal-footer bg-success">
+              <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+              <button class="btn btn-primary">Guardar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      
+  </div>
+  
+  
