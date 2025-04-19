@@ -1,0 +1,391 @@
+<div class="container-fluid">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand d-flex align-items-center" href="#">
+        <img src="https://images.vexels.com/media/users/3/136559/isolated/svg/624dd0a951a1e8a118215b1b24a0da59.svg" alt="Logo" width="40" height="40" class="d-inline-block align-text-top me-2">
+        Farmacia SiFAR
+      </a>
+  
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+  
+        <div class="collapse navbar-collapse justify-content-end" id="navbarContent">
+            <ul class="navbar-nav d-flex flex-row flex-wrap gap-2">
+                <li class="nav-item">
+                    <button class="btn btn-outline-info" type="button">
+                    Entrada
+                    </button>
+                </li>
+                <li class="nav-item">
+                    <button class="btn btn-outline-info" type="button">
+                    Inventario
+                    </button>
+                </li>
+                <li class="nav-item">
+                    <button class="btn btn-outline-info" type="button">
+                    Arqueo
+                    </button>
+                </li>
+                <li class="nav-item">
+                    <button class="btn btn-outline-info" type="button">
+                    Reportes
+                    </button>
+                </li>
+                <li class="nav-item">
+                  <button class="btn btn-outline-info" type="button">
+                  Usuarios
+                  </button>
+              </li>
+                  
+            </ul>
+        </div>
+      
+    </nav>
+    <div class="container mt-4">
+        <div class="row g-4">
+            <div class="col-md-5">
+                <button class="btn btn-info w-100 mb-3" data-bs-toggle="modal" data-bs-target="#modalRegistrarMedicamento">
+                Registrar nuevo medicamento
+                </button>
+                <div style="max-height: 300px; overflow-y: auto;">
+                  <table class="table table-hover table-bordered shadow-sm small rounded" style="overflow: hidden;">
+                    <thead class="bg-info text-white">
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col" class="text-center">Imagen</th>
+                        <th scope="col">Medicamento</th>
+                        <th scope="col">Precio</th>
+                        <th scope="col" class="text-center">Acciones</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngIf="medicamentos?.length === 0">
+                        <td colspan="5" class="text-center">
+                          <div class="alert alert-info m-0 py-2">
+                            No se encontraron medicamentos
+                          </div>
+                        </td>
+                      </tr>
+                      <tr *ngFor="let med of medicamentos; let i = index">
+                        <th scope="row">{{ i + 1 }}</th>
+                        <td class="text-center">
+                          <img [src]="med.imagen" alt="{{ med.nombre }}" width="45" height="45" class="rounded-circle shadow-sm">
+                        </td>
+                        <td>{{ med.nombre }}</td>
+                        <td>{{ med.precio }} Bs.</td>
+                        <td class="text-center">
+                          <div class="btn-group btn-group-sm" role="group">
+                            <button type="button"
+                                    class="btn btn-warning text-white"
+                                    (click)="abrirModalEditar(med)"
+                                    title="Editar"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#modalEditarMedicamento">
+                              <i class="fas fa-edit"></i>
+                            </button>
+                            <button type="button"
+                                    class="btn btn-danger"
+                                    (click)="eliminarMedicamento(med)"
+                                    title="Eliminar">
+                              <i class="fas fa-trash-alt"></i>
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                
+                
+
+            </div>
+            <div class="col-md-7">
+              <div class="mb-3">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Buscar medicamento..."
+                  [(ngModel)]="terminoBusqueda"
+                  (input)="filtrarMedicamentos()"
+                />
+              </div>
+              <div style="max-height: 300px; overflow-y: auto;">
+                <table class="table table-hover table-bordered shadow-sm small rounded" style="overflow: hidden;">
+                  <thead class="bg-info text-white">
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col" class="text-center">Imagen</th>
+                      <th scope="col">Código</th>
+                      <th scope="col">Medicamento</th>
+                      <th scope="col">Precio</th>
+                      <th scope="col">Seleccionar</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngIf="medicamentosFiltrados?.length === 0">
+                      <td colspan="6" class="text-center">
+                        <div class="alert alert-info m-0 py-2">
+                          No se encontraron medicamentos
+                        </div>
+                      </td>
+                    </tr>
+                    <tr *ngFor="let med of medicamentosFiltrados; let i = index">
+                      <th scope="row">{{ i + 1 }}</th>
+                      <td class="text-center">
+                        <img [src]="med.imagen" alt="{{ med.nombre }}" width="45" height="45" class="rounded-circle shadow-sm">
+                      </td>
+                      <td>{{ med.codigo }}</td>
+                      <td>{{ med.nombre }}</td>
+                      <td>{{ med.precio }} Bs.</td>
+                      
+                      <td class="text-center">
+                        <button 
+                          class="btn btn-sm btn-success"
+                          (click)="agregarAlCarrito(med)"
+                          [disabled]="estaEnCarrito(med)"
+                        >
+                          <i class="fas fa-shopping-cart"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              
+              </div>
+              
+        </div>
+
+      </div>
+      
+      <div class="container mt-4">
+        <div class="row g-4" style="height: 600px;">
+          <div class="col-md-7">
+            <h5 class="mt-4">Medicamentos seleccionados</h5>
+            <div style="max-height: 455px; overflow-y: auto;">
+              <table class="table table-hover table-bordered shadow-sm small rounded" style="overflow: hidden;">
+                <thead class="bg-info text-white">
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col" class="text-center">Imagen</th>
+                    <th scope="col">Medicamento</th>
+                    <th scope="col">Precio unitario</th>
+                    <th scope="col">Cantidad</th>
+                    <th scope="col">Total</th>
+                    <th scope="col">Acción</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngIf="carrito?.length === 0">
+                    <td colspan="7" class="text-center">
+                      <div class="alert alert-info m-0 py-2">
+                        No hay medicamentos en el carrito
+                      </div>
+                    </td>
+                  </tr>
+                  <tr *ngFor="let med of carrito; let i = index">
+                    <th scope="row">{{ i + 1 }}</th>
+                    <td class="text-center">
+                      <img [src]="med.imagen" alt="{{ med.nombre }}" width="45" height="45" class="rounded-circle shadow-sm">
+                    </td>
+                    <td>{{ med.nombre }}</td>
+                    <td>{{ med.precio }} Bs.</td>
+                    <td>{{ med.cantidad }}</td>
+                    <td>{{ med.total }} Bs.</td>
+                    <td class="text-center">
+                      <button 
+                        class="btn btn-sm btn-danger"
+                        (click)="quitarDelCarrito(med)"
+                      >
+                        <i class="fas fa-trash"></i>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr *ngIf="carrito.length > 0">
+                    <td colspan="5" class="text-end fw-bold">TOTAL GENERAL:</td>
+                    <td colspan="2" class="fw-bold">{{ obtenerTotalGeneral() }} Bs.</td>
+                  </tr>
+                  
+                </tbody>
+              </table>
+            </div>
+            
+            
+          </div>
+      
+          <div class="col-md-5">
+            <form autocomplete="off">
+                <div class="form-group">
+                    <div class="row">
+                      <div class="col-8">
+                        <input type="text" class="form-control mb-3" placeholder="Número(NIT/CI/OTRO)" [(ngModel)]="numeroDocumento" name="numeroDocumento">
+                      </div>
+                      <div class="col-4">
+                        <input type="text" class="form-control mb-3" placeholder="Complemento" [(ngModel)]="complemento" name="complemento">
+                      </div>
+                      <div class="col-12">
+                        <input type="text" class="form-control mb-3" placeholder="Nombre del cliente" [(ngModel)]="nombreCliente" name="nombreCliente">
+                      </div>
+                      <div class="col-12">
+                        <select class="form-control" [(ngModel)]="tipopago" name="tipopago">
+                          <option value="EFECTIVO">EFECTIVO</option>
+                          <option value="PAGO POR QR">PAGO POR QR</option>
+                          <option value="DEPOSITO BANCARIO">DEPOSITO BANCARIO</option>
+                        </select>
+                      </div>
+                    </div>
+                    
+                    
+                    
+                </div>
+            </form>
+            <button class="btn btn-info w-100 mt-3 mb-3" (click)="guardarSalida()">
+              Registrar salida
+            </button>
+            
+            <div style="max-height: 300px; overflow-y: auto;">
+              <table class="table table-hover table-bordered shadow-sm small rounded" style="overflow: hidden;">
+                <thead class="bg-info text-white">
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Número (NIT / CI / OTRO)</th>
+                      <th scope="col">Cliente</th>
+                      <th scope="col">Fecha</th>
+                      <th scope="col">Acciones</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngIf="salidas.length === 0">
+                      <td colspan="5" class="text-center">
+                        <div class="alert alert-info m-0 py-2">
+                          No hay salidas registradas.
+                        </div>
+                      </td>
+                    </tr>
+                    <tr *ngFor="let salida of salidas; let i = index">
+                      <th scope="row">{{ i + 1 }}</th>
+                      <td>{{ salida.numeroDocumento }}</td>
+                      <td>{{ salida.nombreCliente }}</td>
+                      <td>{{ salida.fecha | date: 'dd/MM/yyyy HH:mm' }}</td>
+                      <td class="text-center">
+                        <div class="btn-group btn-group-sm" role="group">
+                          <button
+                          type="button"
+                          class="btn btn-secondary text-white"
+                          title="Imprimir"
+                          (click)="imprimirSalida(salida)"
+                        >
+                          <i class="fas fa-print"></i>
+                        </button>
+                        
+                          <button type="button"
+                                  class="btn btn-danger"
+                                  (click)="eliminarSalida(salida)"
+                                  title="Eliminar">
+                            <i class="fas fa-trash-alt"></i>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                  
+              </table>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+      
+      <div class="modal fade" id="modalRegistrarMedicamento" tabindex="-1" aria-labelledby="modalMedicamentoLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header bg-success">
+              <h5 class="modal-title" id="modalMedicamentoLabel">Registrar nuevo medicamento</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+              <input type="text" class="form-control mb-3" placeholder="Código" [(ngModel)]="nuevoMedicamento.codigo" name="codigo" required>
+              <input type="text" class="form-control mb-3" placeholder="Nombre del medicamento" [(ngModel)]="nuevoMedicamento.nombre" name="nombre" required>
+              <input type="text" class="form-control mb-3" placeholder="Imagen" [(ngModel)]="nuevoMedicamento.imagen" name="imagen" required>
+              <input type="number" class="form-control mb-3" placeholder="Precio" [(ngModel)]="nuevoMedicamento.precio" name="precio" required>
+              <div *ngIf="errorVisible" class="card bg-danger mb-3">
+                <div class="card-body p-2">
+                  <p class="card-text text-white mb-0 text-center">
+                    <i class="icon fas fa-ban"></i> Por favor, complete todos los campos correctamente.
+                  </p>
+                </div>
+              </div>
+              <div *ngIf="correctoVisible" class="card bg-success mb-3">
+                <div class="card-body p-2">
+                  <p class="card-text text-white mb-0 text-center">
+                    <i class="fas fa-check-circle"></i> Medicamento registrado con éxito.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer bg-success">
+              <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+              <button class="btn btn-primary" (click)="guardarMedicamento()">Guardar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal fade" id="modalEditarMedicamento" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header bg-warning">
+              <h5 class="modal-title">Editar Medicamento</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+              <form #editForm="ngForm">
+                <div class="mb-3">
+                  <label class="form-label">Código</label>
+                  <input type="text" class="form-control" name="codigo" required
+                         [(ngModel)]="medicamentoSeleccionado.codigo">
+                </div>
+                
+                <div class="mb-3">
+                  <label class="form-label">Nombre</label>
+                  <input type="text" class="form-control" name="nombre" required
+                         [(ngModel)]="medicamentoSeleccionado.nombre">
+                </div>
+                
+                <div class="mb-3">
+                  <label class="form-label">Imagen (URL)</label>
+                  <input type="url" class="form-control" name="imagen" required
+                         [(ngModel)]="medicamentoSeleccionado.imagen">
+                </div>
+                
+                <div class="mb-3">
+                  <label class="form-label">Precio</label>
+                  <input type="number" class="form-control" name="precio" min="0" step="0.01" required
+                         [(ngModel)]="medicamentoSeleccionado.precio">
+                </div>
+                <div *ngIf="errorVisibleEditar" class="card bg-danger mb-3">
+                  <div class="card-body p-2">
+                    <p class="card-text text-white mb-0 text-center">
+                      <i class="icon fas fa-ban"></i> Por favor, complete todos los campos correctamente.
+                    </p>
+                  </div>
+                </div>
+                <div *ngIf="correctoVisibleEditar" class="card bg-success mb-3">
+                  <div class="card-body p-2">
+                    <p class="card-text text-white mb-0 text-center">
+                      <i class="fas fa-check-circle"></i> Medicamento actualizado con éxito.
+                    </p>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer bg-warning">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+              <button type="button" class="btn btn-primary" (click)="guardarEdicion()">Guardar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+  </div>
+  
+  
